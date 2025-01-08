@@ -56,7 +56,13 @@ button:hover{
     background-color: black;
 }
 
-
+.backCol{
+  position: relative;
+}
+.backCol h1{
+  position: absolute;
+  transform: translateX(-20px);
+}
 
   @media (max-width: 1024px) {
     .imgSet {
