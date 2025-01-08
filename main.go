@@ -14,15 +14,21 @@ func main() {
 		fs.ServeHTTP(w, r)
 	})))
 
-	// Register the handler for the routes
 	http.HandleFunc("/register", registerHandler) // Serve login form
 	http.HandleFunc("/login", loginHandler)       // Handle login form submission
-	http.HandleFunc("/welcome", welcomePage)
+	http.HandleFunc("/", indexHandler)            // Handle the root route (index page)
+	http.HandleFunc("/welcome", welcomeHandler)
+
+	http.HandleFunc("/userview", userviewHandler)
+	http.HandleFunc("/adminview", adminviewHandler)
+	http.HandleFunc("/superadminview", superadminviewHandler)
 
 	http.HandleFunc("/users", displayUsers)
 	http.HandleFunc("/admin", displayAdmins)
-
+	log.Fatal(http.ListenAndServe(":8080", nil))
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal("Server failed to start: ", err)
+	}
 }
