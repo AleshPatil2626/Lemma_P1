@@ -13,6 +13,9 @@ func main() {
 	http.HandleFunc("/login", loginHandler) // Handle login form submission
 	http.HandleFunc("/welcome", welcomePage)
 
+	http.HandleFunc("/users", displayUsers)
+	http.HandleFunc("/admin", displayAdmins)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

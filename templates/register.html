@@ -3,48 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/register.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <link rel="stylesheet" href="../assets/css/register.css">
-    <title>Document</title>
+    <title>Registration Page</title>
 </head>
 <body>
     <main>
        <div class="container">
         <div class="row">
-            <div class="col-md-8 off-set-md-4">
+            <div class="col-md-8 offset-md-4">
                 <div class="registerPage">
-                    <h2 class="text-center mt-2">Registation Page</h2>
+                    <h2 class="text-center mt-2">Registration Page</h2>
                     <form action="/register" method="POST" id="registrationForm">
                         <div>
                             <label for="name">Name <sub class="text-danger">*</sub></label>
-                            <input type="text" id="Fname" class="form-control">
+                            <input type="text" id="uname" name="uname" class="form-control">
                             <div class="error error-txt" id="fullName" style="display: none; color: red;">Name can't be blank</div>
                             <div class="error error-txt" id="invalidName" style="display: none; color: red;">Name must only contain letters and spaces</div>
                         </div>
                     
                         <div>
                             <label for="email">Email <sub class="text-danger">*</sub></label>
-                            <input type="email" id="email" class="form-control">
+                            <input type="email" id="email" name="email" class="form-control">
                             <div class="error error-txt" id="emailError" style="display: none; color: red;">Email can't be blank</div>
                         </div>
                     
                         <div>
-                            <label for="username">UserName<sub class="text-danger">*</sub></label>
-                            <input type="text" id="username" class="form-control">
+                            <label for="username">UserName <sub class="text-danger">*</sub></label>
+                            <input type="text" id="username" name="username" class="form-control">
                             <div class="error error-txt" id="usernameError" style="display: none; color: red;">Username can't be blank</div>
                             <div class="error error-txt" id="invalidUsername" style="display: none; color: red;">Username must be alphanumeric and may include underscores or dots</div>
                         </div>
                     
                         <div>
+                            <label for="password">Password <sub class="text-danger">*</sub></label>
+                            <input type="password" id="upassword" name="upassword" class="form-control">
+                            <div class="error error-txt" id="passnameError" style="display: none; color: red;">Password can't be blank</div>
+                            <div class="error error-txt" id="passUsername" style="display: none; color: red;">Password must be alphanumeric and may include underscores or dots</div>
+                        </div>
+
+                        <div>
                             <label for="mobile">Contact No <sub class="text-danger">*</sub></label>
-                            <input type="tel" id="mobile" class="form-control" onchange="PhoneValidation()">
+                            <input type="tel" id="mobileno" name="mobileno" class="form-control">
                             <div id="phoneValidationMsg" class="text-danger"></div>
                         </div>
                     
                         <div>
                             <label for="role">Select Your Role <sub class="text-danger">*</sub></label>
-                            <select name="Role" id="role" class="form-control">
+                            <select name="urole" id="urole" class="form-control">
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
                                 <option value="Super Admin">Super Admin</option>
@@ -55,17 +62,16 @@
                             <button type="submit" id="btn" class="btn btn-success">Submit</button>
                         </div>
                     </form>
-                    
-                  
-                    
                 </div>
             </div>
         </div>
        </div>
     </main>
+
+    <!-- Include JS files -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="./assets/js/register.js"></script>
+    <!-- <script src="../assets/js/register.js"></script> -->
 </body>
 </html>

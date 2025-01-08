@@ -10,6 +10,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func init() {
@@ -20,7 +21,6 @@ func init() {
 	}
 }
 
-// Handle user registration
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		// Get form values
@@ -31,9 +31,16 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		upassword := r.FormValue("upassword")
 		urole := r.FormValue("urole")
 
-		// Simple validations
-		if uname == "" || email == "" || mobileno == "" || username == "" || upassword == "" {
+		// Simple validations: Check if all fields are filled
+		if uname == "" || email == "" || mobileno == "" || username == "" || upassword == "" || urole == "" {
 			http.Error(w, "All fields are required", http.StatusBadRequest)
+			return
+		}
+
+		// Hash the password before storing it
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(upassword), bcrypt.DefaultCost)
+		if err != nil {
+			http.Error(w, "Error hashing password", http.StatusInternalServerError)
 			return
 		}
 
@@ -47,35 +54,24 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Check if username already exists
 		var existingUsername string
-		err = db.QueryRow("SELECT username FROM registeruser WHERE username = ?", username).Scan(&existingUsername)
+		err = db.QueryRow("SELECT username FROM registerusers_tbl WHERE username = ?", username).Scan(&existingUsername)
 		if err == nil {
 			http.Error(w, "Username already taken", http.StatusBadRequest)
 			return
 		}
 
-		// Insert the user data into the registeruser table
-		_, err = db.Exec("INSERT INTO registeruser (uname, email, mobileno, username, upassword, urole) VALUES (?, ?, ?, ?, ?, ?)", uname, email, mobileno, username, upassword, urole)
+		// Insert the user data into the registerusers_tbl table
+		_, err = db.Exec("INSERT INTO registerusers_tbl (name, email, username, password, mobile, role) VALUES (?, ?, ?, ?, ?, ?)", uname, email, username, hashedPassword, mobileno, urole)
 		if err != nil {
 			log.Fatal("Error inserting data: ", err)
 			http.Error(w, "Error registering user", http.StatusInternalServerError)
 			return
 		}
 
-		// Render the registration success page
-		tmpl, err := template.ParseFiles("templates/registeruser.html")
-		if err != nil {
-			http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
-			return
-		}
-
-		// Send a success message to the template
-		err = tmpl.Execute(w, "Registration successful! Please log in.")
-		if err != nil {
-			http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
-			return
-		}
+		// Registration success response (can be rendered using a template or a success message)
+		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
 	} else {
-		// Serve the registration page (GET request)
+		// Handle GET requests (serve the registration page)
 		tmpl, err := template.ParseFiles("templates/register.html")
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
