@@ -7,17 +7,21 @@ import (
 )
 
 func main() {
-	// Register the handler for the routes
-	http.HandleFunc("/register", registerHandler)        // Serve login form
-	http.HandleFunc("/login", loginHandler) // Handle login form submission
-	http.HandleFunc("/welcome", welcomePage)
+	// Serve static files
+	fs := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/css")
+		fs.ServeHTTP(w, r)
+	})))
 
+	// Register the handler for the routes
+	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/login", loginHandler)
+	http.HandleFunc("/welcome", welcomePage)
 	http.HandleFunc("/users", displayUsers)
 	http.HandleFunc("/admin", displayAdmins)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal("Server failed to start: ", err)
-	}
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
