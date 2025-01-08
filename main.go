@@ -8,9 +8,14 @@ import (
 
 func main() {
 	// Register the handler for the routes
-	http.HandleFunc("/register", registerHandler)        // Serve login form
-	http.HandleFunc("/login", loginHandler) // Handle login form submission
-	http.HandleFunc("/welcome", welcomePage)
+	http.HandleFunc("/register", registerHandler) // Serve login form
+	http.HandleFunc("/login", loginHandler)       // Handle login form submission
+	http.HandleFunc("/", indexHandler) // Handle the root route (index page)
+	http.HandleFunc("/welcome", welcomeHandler)
+
+	http.HandleFunc("/userview", userviewHandler)
+	http.HandleFunc("/adminview", adminviewHandler)
+	http.HandleFunc("/superadminview", superadminviewHandler)
 
 	http.HandleFunc("/users", displayUsers)
 	http.HandleFunc("/admin", displayAdmins)
