@@ -15,9 +15,10 @@ func main() {
 	})))
 
 	// Register the handler for the routes
-	http.HandleFunc("/register", registerHandler)
-	http.HandleFunc("/login", loginHandler)
+	http.HandleFunc("/register", registerHandler) // Serve login form
+	http.HandleFunc("/login", loginHandler)       // Handle login form submission
 	http.HandleFunc("/welcome", welcomePage)
+
 	http.HandleFunc("/users", displayUsers)
 	http.HandleFunc("/admin", displayAdmins)
 
