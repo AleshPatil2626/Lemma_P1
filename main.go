@@ -14,24 +14,19 @@ func main() {
 		fs.ServeHTTP(w, r)
 	})))
 
-	http.HandleFunc("/register", registerHandler) // Serve login form
+	http.HandleFunc("/", loginHandler)            // Login handler for the root route
 	http.HandleFunc("/login", loginHandler)       // Handle login form submission
-	//http.HandleFunc("/", indexHandler)            // Handle the root route (index page)
-	http.HandleFunc("/welcome", welcomeHandler)
-	//http.HandleFunc("/", loginHandler) // Login handler s
+	http.HandleFunc("/register", registerHandler) // Handle registration form submission
+	http.HandleFunc("/welcome", welcomeHandler)   // Handle welcome page
 
-	http.HandleFunc("/userview", userviewHandler)
-	http.HandleFunc("/adminview", adminviewHandler)
-	http.HandleFunc("/superadminview", superadminviewHandler)
+	http.HandleFunc("/userview", userviewHandler)             // Handle user view
+	http.HandleFunc("/adminview", adminviewHandler)           // Handle admin view
+	http.HandleFunc("/superadminview", superadminviewHandler) // Handle super admin view
 
-	http.HandleFunc("/users", displayUsers)
-	http.HandleFunc("/admin", displayAdmins)
+	http.HandleFunc("/users", displayUsers)  // Handle users list
+	http.HandleFunc("/admin", displayAdmins) // Handle admins list
 
-	http.HandleFunc("/", loginHandler)        // Login handler
-	http.HandleFunc("/user", userviewHandler) // User view
-	//http.HandleFunc("/admin", adminviewHandler) // Admin view
-	//http.HandleFunc("superadmin", superadminviewHandler)
-	http.HandleFunc("/products", productHandler)
+	http.HandleFunc("/product", productHandler) // Handle product page
 
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")

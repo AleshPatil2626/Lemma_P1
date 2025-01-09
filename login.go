@@ -169,3 +169,18 @@ func superadminviewHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+// Define the handler for the product page
+func productHandler(w http.ResponseWriter, r *http.Request) {
+	// Serve the product page
+	tmpl, err := template.ParseFiles("templates/product.html")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
+		return
+	}
+}
