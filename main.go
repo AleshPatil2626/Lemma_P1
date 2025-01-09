@@ -7,10 +7,21 @@ import (
 )
 
 func main() {
-	// Register the handler for the routes
-	http.HandleFunc("/register", registerHandler)        // Serve login form
-	http.HandleFunc("/login", loginHandler) // Handle login form submission
-	http.HandleFunc("/welcome", welcomePage)
+	// Serve static files
+	fs := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/css")
+		fs.ServeHTTP(w, r)
+	})))
+
+	http.HandleFunc("/register", registerHandler) // Serve login form
+	http.HandleFunc("/login", loginHandler)       // Handle login form submission
+	http.HandleFunc("/", indexHandler)            // Handle the root route (index page)
+	http.HandleFunc("/welcome", welcomeHandler)
+
+	http.HandleFunc("/userview", userviewHandler)
+	http.HandleFunc("/adminview", adminviewHandler)
+	http.HandleFunc("/superadminview", superadminviewHandler)
 
 	http.HandleFunc("/users", displayUsers)
 	http.HandleFunc("/admin", displayAdmins)

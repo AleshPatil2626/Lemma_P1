@@ -67,8 +67,18 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Registration success response (can be rendered using a template or a success message)
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		// Registration success: Render the welcome page
+		tmpl, err := template.ParseFiles("templates/welcome.html")
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
+			return
+		}
+		err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
+			return
+		}
+
 	} else {
 		// Handle GET requests (serve the registration page)
 		tmpl, err := template.ParseFiles("templates/register.html")
