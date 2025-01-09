@@ -18,8 +18,7 @@ func main() {
 	http.HandleFunc("/login", loginHandler)       // Handle login form submission
 	//http.HandleFunc("/", indexHandler)            // Handle the root route (index page)
 	http.HandleFunc("/welcome", welcomeHandler)
-
-	//http.HandleFunc("/", loginHandler) // Login handler
+	//http.HandleFunc("/", loginHandler) // Login handler s
 
 	http.HandleFunc("/userview", userviewHandler)
 	http.HandleFunc("/adminview", adminviewHandler)
