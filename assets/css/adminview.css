@@ -10,7 +10,7 @@ body{
 #btn1:hover{
     cursor: pointer;
     box-shadow: 4px 4px 4px 4px rgb(10, 150, 206);
-}
+} 
 #btn2{
     border-radius: 5px;
     padding: 10px;
