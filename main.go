@@ -26,7 +26,8 @@ func main() {
 	http.HandleFunc("/users", displayUsers)  // Handle users list
 	http.HandleFunc("/admin", displayAdmins) // Handle admins list
 
-	http.HandleFunc("/product", productHandler) // Handle product page
+	http.HandleFunc("/product", productHandler)       // Handle product page
+	http.HandleFunc("/buyproduct", buyproductHandler) // Handle product page
 
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")
