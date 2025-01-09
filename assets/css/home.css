@@ -5,6 +5,10 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+}
 .logo {
     font-weight: bold;
     color: #007bff;
@@ -44,22 +48,23 @@ button:hover{
     border-radius: 50px;
 }
 /* ==================================================== */
-.imgSet {
-    width: 100%;
-    max-width: 1400px; 
-    height: 600px;
-    background-color: black;
-  }
-
-.imgSec{
-    width:100%;
-    background-color: black;
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
+section {
+  background-color: rgb(201, 160, 192); /* Set background color to pink */
+  min-height: 100vh;      /* Ensure it takes full viewport height */
+  width: 100%;
+}
+.sec-Img img {
+  height: 500px;
+  width: 50%;
+  float: right;
+  padding-top: 50px;
+}
 
-
-  @media (max-width: 1024px) {
-    .imgSet {
-      width: 100%;
-    }
-  }
+.sec-hed{
+ position: absolute;
+}
