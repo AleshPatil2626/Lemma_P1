@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f2f5;
+    font-family: "Poppins", sans-serif;
+}
+
+.container {
+    background: #fff;
+    border-radius: 5px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.buttons .btn {
+    margin: 10px;
+    font-size: 1rem;
+    padding: 10px 20px;
+}

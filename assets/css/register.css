@@ -15,13 +15,14 @@ body{
 }
 ::selection{
     color: #fff;
-    background: #5372F0;
+    background: #cfeef3;
   }
 .registerPage{
+  cursor: pointer;
 width: 380px;
   padding: 40px 30px 50px 30px;
+  border:2px solid rgb(199, 178, 178);
   background: #fff;
   border-radius: 5px;
   text-align: center;
-  box-shadow: 10px 10px 15px rgba(0,0,0,0.1);
-}
+  box-shadow: #4312f5f1 0px 30px 90px;}

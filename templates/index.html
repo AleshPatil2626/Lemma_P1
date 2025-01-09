@@ -13,17 +13,17 @@
   <main>
     <div class="loginPage">
       <h2>Login Form</h2>
-      <form id="loginForm" action="">
+      <form id="loginForm" action="/login" method="POST">
         <div class="field email">
           <div class="input-area">
-            <input type="email" id="email" placeholder="Email Address">
+            <input type="email" id="email" name="email" placeholder="Email Address">
             <i class="icon fas fa-envelope"></i>
           </div>
           <div class="error error-txt" id="emailError" style="display: none; color: red;">Email can't be blank</div>
         </div>
         <div class="field password">
           <div class="input-area">
-            <input type="password" id="password" placeholder="Password">
+            <input type="password" id="password" name="password" placeholder="Password">
             <i class="icon fas fa-lock"></i>
           </div>
           <div class="error error-txt" id="passError" style="display: none; color: red;">Password can't be blank</div>
