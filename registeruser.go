@@ -63,13 +63,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		// Insert the user data into the registerusers_tbl table
 		_, err = db.Exec("INSERT INTO registerusers_tbl (name, email, username, password, mobile, role) VALUES (?, ?, ?, ?, ?, ?)", uname, email, username, hashedPassword, mobileno, urole)
 		if err != nil {
-			log.Fatal("Error inserting data: ", err)
 			http.Error(w, "Error registering user", http.StatusInternalServerError)
 			return
 		}
 
 		// Registration success response (can be rendered using a template or a success message)
-		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	} else {
 		// Handle GET requests (serve the registration page)
 		tmpl, err := template.ParseFiles("templates/register.html")

@@ -8,8 +8,7 @@ import (
 
 func main() {
 	// Register the handler for the routes
-	http.HandleFunc("/register", registerHandler)
-	http.HandleFunc("/", loginForm)         // Serve login form
+	http.HandleFunc("/register", registerHandler)        // Serve login form
 	http.HandleFunc("/login", loginHandler) // Handle login form submission
 	http.HandleFunc("/welcome", welcomePage)
 
