@@ -1,0 +1,31 @@
+body{
+    background-image:url("admin.jpg");
+    background-size: cover;
+}
+#btn1{
+   border-radius: 5px;
+   padding: 10px;
+   font-size: x-large;
+}
+#btn1:hover{
+    cursor: pointer;
+    box-shadow: 4px 4px 4px 4px rgb(10, 150, 206);
+} 
+#btn2{
+    border-radius: 5px;
+    padding: 10px;
+    font-size: x-large;
+}
+#btn2:hover{
+    cursor: pointer;
+    box-shadow: 4px 4px 4px 4px rgb(55, 207, 55);
+}
+.Maindiv{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+button{
+    margin: 10px;
+}
