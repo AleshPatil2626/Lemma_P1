@@ -32,6 +32,7 @@ func main() {
 	http.HandleFunc("/user", userviewHandler) // User view
 	//http.HandleFunc("/admin", adminviewHandler) // Admin view
 	//http.HandleFunc("superadmin", superadminviewHandler)
+	http.HandleFunc("/product", productHandler)
 
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")
