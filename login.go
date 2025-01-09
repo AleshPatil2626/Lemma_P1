@@ -20,11 +20,16 @@ func init() {
 	}
 }
 
+// Struct to pass role data to templates
+type PageData struct {
+	Role string
+}
+
 // Handler for the login page
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle GET request to show the login page
 	if r.Method == http.MethodGet {
-		tmpl, err := template.ParseFiles("templates/login.html")
+		tmpl, err := template.ParseFiles("templates/index.html")
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
 			return
@@ -36,48 +41,87 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if r.Method == http.MethodPost {
 		// Handle POST request to process the login form submission
-		username := r.FormValue("username")
+		email := r.FormValue("email")
+		password := r.FormValue("password") // Capture the password from the form
+
+		// Validate email and password inputs
+		if email == "" {
+			http.Error(w, "Email cannot be empty", http.StatusBadRequest)
+			return
+		}
+		if password == "" {
+			http.Error(w, "Password cannot be empty", http.StatusBadRequest)
+			return
+		}
 
 		// Connect to the database
 		connStr := os.Getenv("DB_CONN_STR")
 		db, err := sql.Open("mysql", connStr)
 		if err != nil {
-			log.Fatal("Error opening database connection: ", err)
 			http.Error(w, "Error opening database", http.StatusInternalServerError)
 			return
 		}
 		defer db.Close()
 
-		// Query the database to get the role for the given username
+		// Query the database to get the role for the given email
 		var role string
-		err = db.QueryRow("SELECT role FROM registeruser_tbl WHERE username = ?", username).Scan(&role)
-
-		// Check for errors in querying or if the username doesn't exist
+		err = db.QueryRow("SELECT role FROM registerusers_tbl WHERE email = ?", email).Scan(&role)
 		if err == sql.ErrNoRows {
-			http.Error(w, "Username not found", http.StatusBadRequest)
+			http.Error(w, "Email not found", http.StatusUnauthorized)
 			return
 		} else if err != nil {
 			http.Error(w, "Error querying the database", http.StatusInternalServerError)
 			return
 		}
 
-		// Check if username is empty and redirect based on role
-		if username == "" {
-			switch role {
-			case "user":
-				http.Redirect(w, r, "/userview", http.StatusSeeOther)
-			case "admin":
-				http.Redirect(w, r, "/adminview", http.StatusSeeOther)
-			case "uperadmin":
-				http.Redirect(w, r, "/superadminview", http.StatusSeeOther)
-			default:
-				http.Error(w, "Unknown role", http.StatusForbidden)
+		// Define page data
+		pageData := PageData{Role: role}
+
+		// Conditional check for the role "user"
+		if role == "user" {
+			tmpl, err := template.ParseFiles("templates/userview.html")
+			if err != nil {
+				http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
+				return
+			}
+			err = tmpl.Execute(w, pageData) // Pass the role data to the template
+			if err != nil {
+				http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
+				return
 			}
 			return
-		} else {
-			http.Error(w, "Username is required", http.StatusBadRequest)
+		}
+
+		// Redirect based on other roles
+		if role == "admin" {
+			tmpl, err := template.ParseFiles("templates/adminview.html")
+			if err != nil {
+				http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
+				return
+			}
+			err = tmpl.Execute(w, pageData) // Pass the role data to the template
+			if err != nil {
+				http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
+				return
+			}
 			return
 		}
+		if role == "Super Admin" {
+			tmpl, err := template.ParseFiles("templates/superadminview.html")
+			if err != nil {
+				http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
+				return
+			}
+			err = tmpl.Execute(w, pageData) // Pass the role data to the template
+			if err != nil {
+				http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
+				return
+			}
+			return
+		}
+
+		// If role is not found or unknown
+		http.Error(w, "Unknown role", http.StatusForbidden)
 	}
 }
 
@@ -88,7 +132,8 @@ func userviewHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
 		return
 	}
-	err = tmpl.Execute(w, nil)
+	pageData := PageData{Role: "user"} // Example role assignment
+	err = tmpl.Execute(w, pageData)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
 		return
@@ -102,7 +147,8 @@ func adminviewHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
 		return
 	}
-	err = tmpl.Execute(w, nil)
+	pageData := PageData{Role: "admin"} // Example role assignment
+	err = tmpl.Execute(w, pageData)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
 		return
@@ -116,11 +162,10 @@ func superadminviewHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Error parsing template: %s", err), http.StatusInternalServerError)
 		return
 	}
-	err = tmpl.Execute(w, nil)
+	pageData := PageData{Role: "superadmin"} // Example role assignment
+	err = tmpl.Execute(w, pageData)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error executing template: %s", err), http.StatusInternalServerError)
 		return
 	}
 }
-
-

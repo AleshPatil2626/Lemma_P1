@@ -1,0 +1,52 @@
+body{
+    background-image: url("back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    
+}
+button{
+    background-color: chartreuse;
+    padding: 12px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    
+}
+button:hover{
+    background-color:aqua;
+    box-shadow:3px 3px 3px 3px rgb(226, 228, 224);
+
+
+}
+h1{
+    color:beige;
+    text-transform: uppercase;
+}
+
+h2{
+    color:wheat;
+    
+
+
+}
+.container{
+    padding:0%;
+    padding-inline: 0px;
+}
+li:hover{
+    opacity: 0.7;
+    box-shadow: 4;
+    
+}
+ul li{
+    margin-bottom: 30px;
+    border: 3px;
+    
+}
+a{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    font-size:x-large;
+}
